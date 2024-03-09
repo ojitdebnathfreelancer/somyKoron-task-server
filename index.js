@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 import Replicate from "replicate";
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
@@ -16,7 +17,7 @@ app.get("/", (req, res) => {
   res.send("Server is running for chat boat");
 });
 
-app.post("/", async (req, res) => {
+app.post("/prediction", async (req, res) => {
   try {
     const body = req.body;
     const output = await replicate.run(process.env.MODEL, {
